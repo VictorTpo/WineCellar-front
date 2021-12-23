@@ -2,7 +2,17 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import BottleFormNew from './components/BottleFormNew';
+import Login from './components/Login';
+import Logout from './components/Logout';
 import Home from './components/Home';
+
+const LoginStuff = () => {
+  if(localStorage.getItem("firstName")){
+    return <Logout />
+  } else {
+    return <Login />
+  }
+}
 
 function App() {
   return (
@@ -11,6 +21,7 @@ function App() {
         <ul>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/bottles/new">New bottle</Link></li>
+          <li><LoginStuff /></li>
         </ul>
       </nav>
       <Routes>
