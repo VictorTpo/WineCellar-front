@@ -9,12 +9,12 @@ export default function BottleFormNew() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const url = 'http://localhost:3003/bottles'
-    const body = { name: name }
+    const url   = 'http://localhost:3003/bottles'
+    const body  = { name: name }
     const query = {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(body)
     };
