@@ -4,11 +4,41 @@ import { refreshTokenSetup } from '../utils/refreshToken';
 
 const clientId = '941850839469-71hp7voteve2781u4q3651fges6mt86g.apps.googleusercontent.com'
 
+function createAccount(googleAccount) {
+  const url = 'http://localhost:3003/accounts'
+  const body = {
+    first_name: googleAccount.givenName,
+    last_name: googleAccount.familyName,
+    google_id: googleAccount.googleId,
+    email: googleAccount.email,
+  }
+  const query = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  };
+
+  fetch(url, query)
+    .then(response => {
+      console.log('response', response)
+      if(!response.ok){
+        // todo
+      } else {
+        localStorage.setItem("firstName", googleAccount.givenName)
+        window.location.reload(false)
+      }
+    }).catch(error => {
+      console.log(error)
+      // todo
+    })
+}
+
 function Login (){
   const onSuccess = (response) => {
-    localStorage.setItem("firstName", response.profileObj.givenName)
+    createAccount(response.profileObj)
     refreshTokenSetup(response)
-    window.location.reload(false)
   }
 
   const onFailure = (response) => {
