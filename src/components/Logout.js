@@ -5,8 +5,7 @@ const clientId = '941850839469-71hp7voteve2781u4q3651fges6mt86g.apps.googleuserc
 
 function Logout (){
   const onSuccess = (response) => {
-    console.log('onSuccess')
-    localStorage.removeItem("firstName")
+    localStorage.removeItem("account")
     window.location.reload(false)
   }
 

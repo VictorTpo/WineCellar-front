@@ -22,20 +22,25 @@ function createAccount(googleAccount) {
 
   fetch(url, query)
     .then(response => {
-      console.log('response', response)
       if(!response.ok){
         // todo
       } else {
-        localStorage.setItem("firstName", googleAccount.givenName)
-        window.location.reload(false)
+        return response.json()
       }
+    })
+    .then(body => {
+      const account = {
+        id: body.id,
+        firstName: body.first_name,
+      }
+      localStorage.setItem("account", JSON.stringify(account))
+      window.location.reload(false)
     }).catch(error => {
-      console.log(error)
       // todo
     })
 }
 
-function Login (){
+function Login() {
   const onSuccess = (response) => {
     createAccount(response.profileObj)
     refreshTokenSetup(response)
