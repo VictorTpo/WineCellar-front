@@ -13,7 +13,7 @@ export default function BottlesEdit() {
   const [formSuccess, setFormSuccess] = useState(false)
   const [formFailure, setformFailure] = useState(false)
   const [cannotFetch, setCannotFetch] = useState(false)
-  const bottle_url = `http://localhost:3003/bottles/${id}`
+  const bottle_url = `${process.env.REACT_APP_DOMAIN}/bottles/${id}`
 
   function resetFormOutput() {
     setServerError(false)
@@ -23,7 +23,7 @@ export default function BottlesEdit() {
   }
 
   useEffect(()=> {
-    const url = 'http://localhost:3003/wine_cellars'
+    const url = `${process.env.REACT_APP_DOMAIN}/wine_cellars`
     const wine_cellar_query = {
       method: 'get',
       headers: {

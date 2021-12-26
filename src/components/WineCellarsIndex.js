@@ -8,8 +8,8 @@ function WineCellarsIndex() {
   const [list, setList] = useState([]);
   const [cannotFetch, setCannotFetch] = useState(false)
 
-  const wineCellars = () => {
-    const url   = 'http://localhost:3003/wine_cellars'
+  useEffect(()=> {
+    const url   = `${process.env.REACT_APP_DOMAIN}/wine_cellars`
     const query = {
       method: 'get',
       headers: {
@@ -26,10 +26,6 @@ function WineCellarsIndex() {
         setList([])
         setCannotFetch(true)
       })
-  }
-
-  useEffect(()=> {
-    wineCellars();
   }, [])
 
   const listItems = list.map(({id, name}) =>
