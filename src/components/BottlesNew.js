@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 
-export default function BottleFormNew() {
+export default function BottlesNew() {
   const [name, setName] = useState("");
   const [serverError, setServerError] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)

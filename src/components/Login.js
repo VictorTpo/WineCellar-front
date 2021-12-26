@@ -32,6 +32,7 @@ function createAccount(googleAccount) {
       const account = {
         id: body.id,
         firstName: body.first_name,
+        jwtToken: body.jwt_token
       }
       localStorage.setItem("account", JSON.stringify(account))
       window.location.reload(false)
