@@ -2,7 +2,8 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import BottleFormNew from './components/BottleFormNew';
-import WineCellarFormNew from './components/WineCellarFormNew';
+import WineCellarsIndex from './components/WineCellarsIndex';
+import WineCellarsNew from './components/WineCellarsNew';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Home from './components/Home';
@@ -17,6 +18,7 @@ const LoggedMenu = () => {
   } else {
     return(
       <>
+        <li><Link to="/wine_cellars">My wine cellars</Link></li>
         <li><Link to="/wine_cellars/new">New wine cellar</Link></li>
         <li><Link to="/bottles/new">New bottle</Link></li>
         <li><Logout /></li>
@@ -37,7 +39,8 @@ function App() {
       </nav>
       <Routes>
         <Route exact path='/' element={< Home />}></Route>
-        <Route exact path='/wine_cellars/new' element={< WineCellarFormNew />}></Route>
+        <Route exact path='/wine_cellars' element={< WineCellarsIndex />}></Route>
+        <Route exact path='/wine_cellars/new' element={< WineCellarsNew />}></Route>
         <Route exact path='/bottles/new' element={< BottleFormNew />}></Route>
       </Routes>
     </BrowserRouter>

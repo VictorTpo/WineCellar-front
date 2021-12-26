@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
-import { currentAccountId } from '../utils/currentAccount'
+import { currentAccountJwtToken } from '../utils/currentAccount'
 
-export default function WineCellarFormNew() {
+export default function WineCellarsNew() {
   const [formName, setFormName] = useState("");
   const [name, setName] = useState("");
   const [serverError, setServerError] = useState(false)
@@ -13,13 +13,13 @@ export default function WineCellarFormNew() {
     event.preventDefault();
     const url = 'http://localhost:3003/wine_cellars'
     const body = {
-      name: formName,
-      account_id: currentAccountId()
+      name: formName
     }
     const query = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentAccountJwtToken()}`
       },
       body: JSON.stringify(body)
     };
