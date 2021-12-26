@@ -17,7 +17,7 @@ export default function BottlesNew() {
   }
 
   useEffect(()=> {
-    const url = 'http://localhost:3003/wine_cellars'
+    const url = `${process.env.REACT_APP_DOMAIN}/wine_cellars`
     const query = {
       method: 'get',
       headers: {
@@ -39,7 +39,7 @@ export default function BottlesNew() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const url   = 'http://localhost:3003/bottles'
+    const url   = `${process.env.REACT_APP_DOMAIN}/bottles`
     const body  = {
       name: name,
       wine_cellar_id: wineCellarId

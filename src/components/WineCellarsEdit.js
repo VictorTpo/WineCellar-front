@@ -12,7 +12,7 @@ export default function WineCellarsEdit() {
   const [formSuccess, setFormSuccess] = useState(false)
   const [formFailure, setformFailure] = useState(false)
   const [cannotFetch, setCannotFetch] = useState(false)
-  const wine_cellar_url = `http://localhost:3003/wine_cellars/${id}`
+  const wine_cellar_url = `${process.env.REACT_APP_DOMAIN}/wine_cellars/${id}`
 
   function resetFormOutput() {
     setServerError(false)

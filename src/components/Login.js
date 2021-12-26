@@ -5,7 +5,7 @@ import { refreshTokenSetup } from '../utils/refreshToken';
 const clientId = '941850839469-71hp7voteve2781u4q3651fges6mt86g.apps.googleusercontent.com'
 
 function createAccount(googleAccount) {
-  const url = 'http://localhost:3003/accounts'
+  const url = `${process.env.REACT_APP_DOMAIN}/accounts`
   const body = {
     first_name: googleAccount.givenName,
     last_name: googleAccount.familyName,

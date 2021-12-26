@@ -9,7 +9,7 @@ function BottlesIndex() {
   const [cannotFetch, setCannotFetch] = useState(false)
 
   useEffect(()=> {
-    const url   = 'http://localhost:3003/bottles'
+    const url   = `${process.env.REACT_APP_DOMAIN}/bottles`
     const query = {
       method: 'get',
       headers: {

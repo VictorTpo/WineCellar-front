@@ -9,7 +9,7 @@ function WineCellarsIndex() {
   const [cannotFetch, setCannotFetch] = useState(false)
 
   useEffect(()=> {
-    const url   = 'http://localhost:3003/wine_cellars'
+    const url   = `${process.env.REACT_APP_DOMAIN}/wine_cellars`
     const query = {
       method: 'get',
       headers: {

@@ -13,7 +13,7 @@ export default function BottlesShow() {
   const [serverError, setServerError] = useState(false)
 
   useEffect(()=> {
-    const url = `http://localhost:3003/bottles/${id}`
+    const url = `${process.env.REACT_APP_DOMAIN}/bottles/${id}`
     const query = {
       method: 'get',
       headers: {
@@ -47,7 +47,7 @@ export default function BottlesShow() {
   }
   const handleSubmit = (event) => {
     event.preventDefault();
-    const bottle_url = `http://localhost:3003/bottles/${id}`
+    const bottle_url = `${process.env.REACT_APP_DOMAIN}/bottles/${id}`
     const body = {
       counter: counter + factor
     }
