@@ -1,6 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { currentAccountJwtToken } from '../utils/currentAccount'
 
 function WineCellarsIndex() {
@@ -34,11 +35,14 @@ function WineCellarsIndex() {
   }, [])
 
   const listItems = list.map(({id, name}) =>
-    <li key={id}>{name}</li>
+    <li key={id}>
+      {name}
+      <Link to={`/wine_cellars/${id}/edit`}>edit</Link>
+    </li>
   )
   return(
     <>
-      <h1>My list of wine cellars</h1>
+      <h1>My wine cellars</h1>
       {serverError && <>Error 500</>}
       {cannotFetch && <>Cannot retrieve list</>}
       <ul>
