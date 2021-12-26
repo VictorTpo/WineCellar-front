@@ -8,8 +8,6 @@ import BottlesShow from './components/BottlesShow';
 import WineCellarsEdit from './components/WineCellarsEdit';
 import WineCellarsIndex from './components/WineCellarsIndex';
 import WineCellarsNew from './components/WineCellarsNew';
-import Login from './components/Login';
-import Logout from './components/Logout';
 import Home from './components/Home';
 
 function loggedIn() {
@@ -18,7 +16,7 @@ function loggedIn() {
 
 const LoggedMenu = () => {
   if(!loggedIn()) {
-    return <li><Login /></li>
+    return <li>Login</li>
   } else {
     return(
       <>
@@ -26,7 +24,7 @@ const LoggedMenu = () => {
         <li><Link to="/wine_cellars/new">New wine cellar</Link></li>
         <li><Link to="/bottles">My bottles</Link></li>
         <li><Link to="/bottles/new">New bottle</Link></li>
-        <li><Logout /></li>
+        <li>Logout</li>
       </>
     )
   }
