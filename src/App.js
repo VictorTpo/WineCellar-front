@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import BottlesNew from './components/BottlesNew';
+import BottlesEdit from './components/BottlesEdit';
 import WineCellarsIndex from './components/WineCellarsIndex';
 import WineCellarsNew from './components/WineCellarsNew';
 import WineCellarsEdit from './components/WineCellarsEdit';
@@ -44,6 +45,7 @@ function App() {
         <Route exact path='/wine_cellars/new' element={< WineCellarsNew />}></Route>
         <Route exact path='/wine_cellars/:id/edit' element={< WineCellarsEdit />}></Route>
         <Route exact path='/bottles/new' element={< BottlesNew />}></Route>
+        <Route exact path='/bottles/:id/edit' element={< BottlesEdit />}></Route>
       </Routes>
     </BrowserRouter>
   );
