@@ -7,7 +7,8 @@ import BottlesIndex from './components/BottlesIndex';
 import BottlesNew from './components/BottlesNew';
 import BottlesShow from './components/BottlesShow';
 import Home from './components/Home';
-import Signup from './components/SignUp'
+import SignIn from './components/SignIn'
+import SignUp from './components/SignUp'
 import WineCellarsEdit from './components/WineCellarsEdit';
 import WineCellarsIndex from './components/WineCellarsIndex';
 import WineCellarsNew from './components/WineCellarsNew';
@@ -20,8 +21,8 @@ const LoggedMenu = () => {
   if(!loggedIn()) {
     return(
       <>
-        <li>Login</li>
-        <li><Link to="/signup">Sign up</Link></li>
+        <li><Link to="/sign-in">Sign in</Link></li>
+        <li><Link to="/sign-up">Sign up</Link></li>
       </>
     )
   } else {
@@ -52,7 +53,8 @@ function App() {
         <Route exact path='/bottles/new' element={< BottlesNew />}></Route>
         <Route exact path='/bottles/:id' element={< BottlesShow />}></Route>
         <Route exact path='/bottles/:id/edit' element={< BottlesEdit />}></Route>
-        <Route exact path='/signup' element={< Signup />}></Route>
+        <Route exact path='/sign-in' element={< SignIn />}></Route>
+        <Route exact path='/sign-up' element={< SignUp />}></Route>
         <Route exact path='/wine_cellars' element={< WineCellarsIndex />}></Route>
         <Route exact path='/wine_cellars/new' element={< WineCellarsNew />}></Route>
         <Route exact path='/wine_cellars/:id/edit' element={< WineCellarsEdit />}></Route>
