@@ -29,16 +29,25 @@ function SignIn (){
         if(!response.ok){
           setFormFailure(true)
         } else {
-          // todo
+          return response.json()
         }
-      }).catch(error => {
+      }).then(body => {
+        const account = {
+          id: body.id,
+          firstName: body.first_name,
+          jwtToken: body.jwt_token
+        }
+        localStorage.setItem("account", JSON.stringify(account))
+        window.location.reload(false)
+      })
+      .catch(error => {
         setServerError(true)
       })
   }
 
   return(
     <>
-      <h1>Sign up</h1>
+      <h1>Sign in</h1>
       {serverError && <>Error 500</>}
       {formFailure && <>Form invalid</>}
       <form onSubmit={handleSubmit}>

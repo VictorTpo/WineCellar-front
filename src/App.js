@@ -7,8 +7,8 @@ import BottlesIndex from './components/BottlesIndex';
 import BottlesNew from './components/BottlesNew';
 import BottlesShow from './components/BottlesShow';
 import Home from './components/Home';
+import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
-import SignIn from './components/SignUp'
 import WineCellarsEdit from './components/WineCellarsEdit';
 import WineCellarsIndex from './components/WineCellarsIndex';
 import WineCellarsNew from './components/WineCellarsNew';
