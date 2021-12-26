@@ -14,7 +14,14 @@ export default function WineCellarsEdit() {
   const [cannotFetch, setCannotFetch] = useState(false)
   const wine_cellar_url = `http://localhost:3003/wine_cellars/${id}`
 
-  const initWineCellar = () => {
+  function resetFormOutput() {
+    setServerError(false)
+    setFormSuccess(false)
+    setformFailure(false)
+    setCannotFetch(false)
+  }
+
+  useEffect(()=> {
     const query = {
       method: 'get',
       headers: {
@@ -25,16 +32,13 @@ export default function WineCellarsEdit() {
     fetch(wine_cellar_url, query)
       .then(response => response.json())
       .then(response => {
-        setCannotFetch(false)
+        resetFormOutput()
         setFormName(response.name)
       }).catch(error => {
+        resetFormOutput()
         setCannotFetch(true)
       })
-    }
-
-    useEffect(()=> {
-      initWineCellar();
-    }, [])
+    }, [wine_cellar_url])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -52,18 +56,16 @@ export default function WineCellarsEdit() {
 
     fetch(wine_cellar_url, query)
       .then(response => {
-        setServerError(false)
+        resetFormOutput()
         if(!response.ok){
-          setFormSuccess(false)
           setformFailure(true)
         } else {
-          setformFailure(false)
           setFormSuccess(true)
           setName(formName)
         }
       })
       .catch(error => {
-        setFormSuccess(false)
+        resetFormOutput()
         if(!formFailure) { setServerError(true) }
       })
   }

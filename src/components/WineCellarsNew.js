@@ -9,6 +9,12 @@ export default function WineCellarsNew() {
   const [formSuccess, setFormSuccess] = useState(false)
   const [formFailure, setformFailure] = useState(false)
 
+  function resetFormOutput() {
+    setServerError(false)
+    setFormSuccess(false)
+    setformFailure(false)
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const url = 'http://localhost:3003/wine_cellars'
@@ -26,11 +32,10 @@ export default function WineCellarsNew() {
 
     fetch(url, query)
       .then(response => {
-        setServerError(false)
+        resetFormOutput()
         if(!response.ok){
           setformFailure(true)
         } else {
-          setformFailure(false)
           return response.json()
         }
       })
@@ -41,8 +46,10 @@ export default function WineCellarsNew() {
           setFormName('')
         }
       }).catch(error => {
-        setFormSuccess(false)
-        if(!formFailure) { setServerError(true) }
+        if(!formFailure) {
+          resetFormOutput()
+          setServerError(true)
+        }
       })
   }
 
