@@ -1,14 +1,16 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import './App.css';
+
 import BottlesEdit from './components/BottlesEdit';
 import BottlesIndex from './components/BottlesIndex';
 import BottlesNew from './components/BottlesNew';
 import BottlesShow from './components/BottlesShow';
+import Home from './components/Home';
+import Signup from './components/SignUp'
 import WineCellarsEdit from './components/WineCellarsEdit';
 import WineCellarsIndex from './components/WineCellarsIndex';
 import WineCellarsNew from './components/WineCellarsNew';
-import Home from './components/Home';
 
 function loggedIn() {
   return(localStorage.getItem("account") != null)
@@ -16,7 +18,12 @@ function loggedIn() {
 
 const LoggedMenu = () => {
   if(!loggedIn()) {
-    return <li>Login</li>
+    return(
+      <>
+        <li>Login</li>
+        <li><Link to="/signup">Sign up</Link></li>
+      </>
+    )
   } else {
     return(
       <>
@@ -30,7 +37,6 @@ const LoggedMenu = () => {
   }
 }
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -42,13 +48,14 @@ function App() {
       </nav>
       <Routes>
         <Route exact path='/' element={< Home />}></Route>
-        <Route exact path='/wine_cellars' element={< WineCellarsIndex />}></Route>
-        <Route exact path='/wine_cellars/new' element={< WineCellarsNew />}></Route>
-        <Route exact path='/wine_cellars/:id/edit' element={< WineCellarsEdit />}></Route>
         <Route exact path='/bottles' element={< BottlesIndex />}></Route>
         <Route exact path='/bottles/new' element={< BottlesNew />}></Route>
         <Route exact path='/bottles/:id' element={< BottlesShow />}></Route>
         <Route exact path='/bottles/:id/edit' element={< BottlesEdit />}></Route>
+        <Route exact path='/signup' element={< Signup />}></Route>
+        <Route exact path='/wine_cellars' element={< WineCellarsIndex />}></Route>
+        <Route exact path='/wine_cellars/new' element={< WineCellarsNew />}></Route>
+        <Route exact path='/wine_cellars/:id/edit' element={< WineCellarsEdit />}></Route>
       </Routes>
     </BrowserRouter>
   );

@@ -41,7 +41,7 @@ export default function WineCellarsEdit() {
     }, [wine_cellar_url])
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const body = {
       name: formName
     }

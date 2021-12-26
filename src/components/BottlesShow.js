@@ -46,7 +46,7 @@ export default function BottlesShow() {
     )
   }
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const bottle_url = `${process.env.REACT_APP_DOMAIN}/bottles/${id}`
     const body = {
       counter: counter + factor
