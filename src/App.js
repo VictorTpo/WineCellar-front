@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import BottlesEdit from './components/BottlesEdit';
 import BottlesIndex from './components/BottlesIndex';
 import BottlesNew from './components/BottlesNew';
+import BottlesShow from './components/BottlesShow';
 import WineCellarsEdit from './components/WineCellarsEdit';
 import WineCellarsIndex from './components/WineCellarsIndex';
 import WineCellarsNew from './components/WineCellarsNew';
@@ -48,6 +49,7 @@ function App() {
         <Route exact path='/wine_cellars/:id/edit' element={< WineCellarsEdit />}></Route>
         <Route exact path='/bottles' element={< BottlesIndex />}></Route>
         <Route exact path='/bottles/new' element={< BottlesNew />}></Route>
+        <Route exact path='/bottles/:id' element={< BottlesShow />}></Route>
         <Route exact path='/bottles/:id/edit' element={< BottlesEdit />}></Route>
       </Routes>
     </BrowserRouter>

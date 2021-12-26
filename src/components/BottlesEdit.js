@@ -54,7 +54,7 @@ export default function BottlesEdit() {
       .then(response => {
         resetFormOutput()
         setName(response.name)
-        setWineCellarId(response.wine_cellar_id)
+        setWineCellarId(response.wine_cellar.id)
       }).catch(error => {
         resetFormOutput()
         setServerError(true)
