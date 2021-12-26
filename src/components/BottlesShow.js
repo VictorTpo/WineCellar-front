@@ -48,7 +48,6 @@ export default function BottlesShow() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const bottle_url = `http://localhost:3003/bottles/${id}`
-    console.log('factor', factor)
     const body = {
       counter: counter + factor
     }

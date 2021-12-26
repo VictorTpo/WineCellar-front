@@ -8,7 +8,7 @@ function BottlesIndex() {
   const [list, setList] = useState([]);
   const [cannotFetch, setCannotFetch] = useState(false)
 
-  const bottles = () => {
+  useEffect(()=> {
     const url   = 'http://localhost:3003/bottles'
     const query = {
       method: 'get',
@@ -26,10 +26,6 @@ function BottlesIndex() {
         setList([])
         setCannotFetch(true)
       })
-  }
-
-  useEffect(()=> {
-    bottles();
   }, [])
 
   const listItems = list.map(({id, name}) =>

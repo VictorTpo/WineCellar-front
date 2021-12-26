@@ -35,7 +35,7 @@ export default function BottlesNew() {
         setServerError(true)
         setWineCellars([])
       })
-    }, [serverError])
+    }, [])
 
   const handleSubmit = (event) => {
     event.preventDefault();
