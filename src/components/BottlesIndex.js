@@ -35,6 +35,7 @@ function BottlesIndex() {
   const listItems = list.map(({id, name}) =>
     <li key={id}>
       {name}
+      <Link to={`/bottles/${id}`}>show</Link>
       <Link to={`/bottles/${id}/edit`}>edit</Link>
     </li>
   )
