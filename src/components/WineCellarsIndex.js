@@ -6,7 +6,6 @@ import { currentAccountJwtToken } from '../utils/currentAccount'
 
 function WineCellarsIndex() {
   const [list, setList] = useState([]);
-  const [serverError, setServerError] = useState(false)
   const [cannotFetch, setCannotFetch] = useState(false)
 
   const wineCellars = () => {
@@ -21,12 +20,11 @@ function WineCellarsIndex() {
     fetch(url, query)
       .then(response => response.json())
       .then(results => {
-        setServerError(false)
         setCannotFetch(false)
         setList(results)
       }).catch(error => {
         setList([])
-        setServerError(true)
+        setCannotFetch(true)
       })
   }
 
@@ -43,7 +41,6 @@ function WineCellarsIndex() {
   return(
     <>
       <h1>My wine cellars</h1>
-      {serverError && <>Error 500</>}
       {cannotFetch && <>Cannot retrieve list</>}
       <ul>
         { listItems }
