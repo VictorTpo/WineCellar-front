@@ -41,7 +41,7 @@ export default function BottlesNew() {
       {formFailure && <>The form is not valid</>}
       <form onSubmit={handleSubmit}>
       <input
-          id="email"
+          id="name"
           type="text"
           placeholder="name*"
           value={name}
