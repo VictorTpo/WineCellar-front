@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
-import BottleFormNew from './components/BottleFormNew';
+import BottlesNew from './components/BottlesNew';
 import WineCellarsIndex from './components/WineCellarsIndex';
 import WineCellarsNew from './components/WineCellarsNew';
 import Login from './components/Login';
@@ -41,7 +41,7 @@ function App() {
         <Route exact path='/' element={< Home />}></Route>
         <Route exact path='/wine_cellars' element={< WineCellarsIndex />}></Route>
         <Route exact path='/wine_cellars/new' element={< WineCellarsNew />}></Route>
-        <Route exact path='/bottles/new' element={< BottleFormNew />}></Route>
+        <Route exact path='/bottles/new' element={< BottlesNew />}></Route>
       </Routes>
     </BrowserRouter>
   );
