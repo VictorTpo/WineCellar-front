@@ -16,7 +16,7 @@ export default function WineCellarsNew() {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const url = `${process.env.REACT_APP_DOMAIN}/wine_cellars`
     const body = {
       name: formName

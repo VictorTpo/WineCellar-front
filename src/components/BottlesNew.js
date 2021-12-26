@@ -38,7 +38,7 @@ export default function BottlesNew() {
     }, [])
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const url   = `${process.env.REACT_APP_DOMAIN}/bottles`
     const body  = {
       name: name,

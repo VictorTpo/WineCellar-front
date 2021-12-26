@@ -64,7 +64,7 @@ export default function BottlesEdit() {
     }, [bottle_url])
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const body = {
       name: name,
       wine_cellar_id: wineCellarId
