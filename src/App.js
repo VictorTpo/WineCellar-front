@@ -1,12 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
-import './App.css';
+import './App.scss';
 
 import BottlesEdit from './components/BottlesEdit';
 import BottlesIndex from './components/BottlesIndex';
 import BottlesNew from './components/BottlesNew';
 import BottlesShow from './components/BottlesShow';
 import Home from './components/Home';
+import HomeUnlogged from './components/HomeUnlogged';
 import SignIn from './components/SignIn'
 import SignOut from './components/SignOut'
 import SignUp from './components/SignUp'
@@ -19,37 +20,31 @@ function loggedIn() {
 }
 
 const LoggedMenu = () => {
-  if(!loggedIn()) {
     return(
-      <>
-        <li><Link to="/sign-in">Sign in</Link></li>
-        <li><Link to="/sign-up">Sign up</Link></li>
-      </>
-    )
-  } else {
-    return(
-      <>
+      <ul>
         <li><Link to="/wine_cellars">My wine cellars</Link></li>
         <li><Link to="/wine_cellars/new">New wine cellar</Link></li>
         <li><Link to="/bottles">My bottles</Link></li>
         <li><Link to="/bottles/new">New bottle</Link></li>
         <li><SignOut /></li>
-      </>
+      </ul>
     )
+}
+
+const HomeSwitch = () => {
+  if(loggedIn()){
+    return <LoggedMenu />
+  } else {
+    return <HomeUnlogged />
   }
+  // { !loggedIn() ? <HomeUnlogged /> : <LoggedMenu /> }
 }
 
 function App() {
   return (
     <BrowserRouter>
-      <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <LoggedMenu />
-        </ul>
-      </nav>
       <Routes>
-        <Route exact path='/' element={< Home />}></Route>
+        <Route exact path='/' element={HomeSwitch()}></Route>
         <Route exact path='/bottles' element={< BottlesIndex />}></Route>
         <Route exact path='/bottles/new' element={< BottlesNew />}></Route>
         <Route exact path='/bottles/:id' element={< BottlesShow />}></Route>

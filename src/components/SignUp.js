@@ -1,5 +1,8 @@
 
 import React, { useState } from 'react';
+import Header from './Header';
+import ServerError from './FormOutputs/ServerError';
+import FormInvalid from './FormOutputs/FormInvalid';
 
 function SignUp (){
   const [email, setEmail] = useState("");
@@ -8,13 +11,13 @@ function SignUp (){
   const [password, setPassword] = useState("");
   const [serverError, setServerError] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)
-  const [formFailure, setFormFailure] = useState(false)
+  const [formInvalid, setFormInvalid] = useState(false)
 
   const handleSubmit = (event) => {
     event.preventDefault()
     setServerError(false)
     setFormSuccess(false)
-    setFormFailure(false)
+    setFormInvalid(false)
     const url = `${process.env.REACT_APP_DOMAIN}/accounts`
     const body = {
       email: email,
@@ -33,7 +36,7 @@ function SignUp (){
     fetch(url, query)
       .then(response => {
         if(!response.ok){
-          setFormFailure(true)
+          setFormInvalid(true)
         } else {
           setFormSuccess(true)
         }
@@ -44,40 +47,44 @@ function SignUp (){
 
   return(
     <>
-      <h1>Sign up</h1>
-      {serverError && <>Error 500</>}
-      {formFailure && <>Form invalid</>}
+      <Header title="Create an account" />
       {formSuccess && <>Your account has been created</>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="card bg-light border-light text-center container">
         <input
           id="email"
           type="text"
-          placeholder="email*"
+          placeholder="Email*"
+          className="form-control mb-3 mt-3"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           id="password"
           type="password"
-          placeholder="password*"
+          placeholder="Password*"
+          className="form-control mb-3"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <input
           id="firstName"
           type="text"
-          placeholder="firstName*"
+          placeholder="First name*"
+          className="form-control mb-3"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
         />
         <input
           id="lastName"
           type="text"
-          placeholder="lastName*"
+          placeholder="Last name*"
+          className="form-control mb-3"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
-        <input type="submit" />
+        <input type="submit" className="btn btn-primary form-control" value="Create account" />
+        {serverError && <ServerError />}
+        {formInvalid && <FormInvalid />}
       </form>
     </>
   )
