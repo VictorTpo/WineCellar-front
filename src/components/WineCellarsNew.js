@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 
 import { currentAccountJwtToken } from '../utils/currentAccount'
 
+import FormInvalid from './FormOutputs/FormInvalid';
+import Header from './Header';
+import ServerError from './FormOutputs/ServerError';
+import Success from './Alerts/Success';
+
 export default function WineCellarsNew() {
   const [formName, setFormName] = useState("");
-  const [name, setName] = useState("");
+  const [setName] = useState("");
   const [serverError, setServerError] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)
-  const [formFailure, setformFailure] = useState(false)
+  const [formInvalid, setFormInvalid] = useState(false)
 
   function resetFormOutput() {
     setServerError(false)
     setFormSuccess(false)
-    setformFailure(false)
+    setFormInvalid(false)
   }
 
   const handleSubmit = (event) => {
@@ -34,7 +39,7 @@ export default function WineCellarsNew() {
       .then(response => {
         resetFormOutput()
         if(!response.ok){
-          setformFailure(true)
+          setFormInvalid(true)
         } else {
           return response.json()
         }
@@ -46,32 +51,29 @@ export default function WineCellarsNew() {
           setFormName('')
         }
       }).catch(error => {
-        if(!formFailure) {
+        if(!formInvalid) {
           resetFormOutput()
           setServerError(true)
         }
       })
   }
 
-  const SuccessPopin = () => {
-    return <>Your wine cellar {name} has been created</>
-  }
-
   return(
     <>
-      <h1>New Wine Cellar</h1>
-      {serverError && <>Error 500</>}
-      {formSuccess && <SuccessPopin />}
-      {formFailure && <>The form is not valid</>}
-      <form onSubmit={handleSubmit}>
+      <Header title="New wine cellar" />
+      <form onSubmit={handleSubmit} className="card bg-light border-light text-center container">
       <input
           id="formName"
           type="text"
           placeholder="name*"
+          className="form-control mb-3 mt-3"
           value={formName}
           onChange={(e) => setFormName(e.target.value)}
         />
-        <input type="submit" />
+        <input type="submit" className="btn btn-primary form-control" value="Create" />
+        {serverError && <ServerError />}
+        {formInvalid && <FormInvalid />}
+        {formSuccess && <Success text="Wine cellar created"/>}
       </form>
     </>
   );

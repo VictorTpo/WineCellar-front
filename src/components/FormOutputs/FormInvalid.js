@@ -1,10 +1,10 @@
 import React from 'react';
 
+import Warning from '../Alerts/Warning';
+
 function FormInvalid (){
   return(
-    <div className='alert alert-warning mt-2'>
-      The form is not valid, check all fields please
-    </div>
+    <Warning text="The form is not valid, check all fields please" />
   )
 }
 

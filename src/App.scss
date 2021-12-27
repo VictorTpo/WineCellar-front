@@ -18,7 +18,7 @@ html #root {
     padding: 0 !important;
     margin: 0 !important;
   }
-  p { font-size: 1.5em; }
+  p, li { font-size: 1.5em; }
 
   input { font-size: 1.5em; }
 
@@ -54,8 +54,16 @@ header {
     text-align: center;
   }
   button{
-    background: none;
-    border: none;
     position: absolute;
+  }
+}
+
+button.btn-img {
+  background: none;
+  border: none;
+  &.btn-app{
+    border-radius: 35px;
+    padding: 10px;
+    box-shadow: 2px 2px 13px #cec2ff;
   }
 }

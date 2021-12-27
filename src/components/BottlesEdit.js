@@ -3,6 +3,12 @@ import { useParams } from 'react-router-dom';
 
 import { currentAccountJwtToken } from '../utils/currentAccount'
 
+import FormInvalid from './FormOutputs/FormInvalid';
+import Header from './Header';
+import ServerError from './FormOutputs/ServerError';
+import Success from './Alerts/Success';
+import Warning from './Alerts/Warning';
+
 export default function BottlesEdit() {
   const { id } = useParams();
 
@@ -11,14 +17,14 @@ export default function BottlesEdit() {
   const [wineCellars, setWineCellars] = useState([]);
   const [serverError, setServerError] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)
-  const [formFailure, setformFailure] = useState(false)
+  const [formInvalid, setformInvalid] = useState(false)
   const [cannotFetch, setCannotFetch] = useState(false)
   const bottle_url = `${process.env.REACT_APP_DOMAIN}/bottles/${id}`
 
   function resetFormOutput() {
     setServerError(false)
     setFormSuccess(false)
-    setformFailure(false)
+    setformInvalid(false)
     setCannotFetch(false)
   }
 
@@ -34,11 +40,9 @@ export default function BottlesEdit() {
     fetch(url, wine_cellar_query)
       .then(response => response.json())
       .then(response => {
-        resetFormOutput()
         setWineCellars(response)
       }).catch(error => {
-        resetFormOutput()
-        setServerError(true)
+        setCannotFetch(true)
         setWineCellars([])
       })
 
@@ -52,12 +56,10 @@ export default function BottlesEdit() {
     fetch(bottle_url, bottle_query)
       .then(response => response.json())
       .then(response => {
-        resetFormOutput()
         setName(response.name)
         setWineCellarId(response.wine_cellar.id)
       }).catch(error => {
-        resetFormOutput()
-        setServerError(true)
+        setCannotFetch(true)
         setWineCellarId('')
       })
 
@@ -82,48 +84,44 @@ export default function BottlesEdit() {
       .then(response => {
         resetFormOutput()
         if(!response.ok){
-          setformFailure(true)
+          setformInvalid(true)
         } else {
           setFormSuccess(true)
         }
       })
       .catch(error => {
         resetFormOutput()
-        if(!formFailure) { setServerError(true) }
+        if(!formInvalid) { setServerError(true) }
       })
-  }
-
-  const SuccessPopin = () => {
-    return <>Your bottle has been updated</>
-  }
-
-  const TryLater = () => {
-    return <span>Plz, try later</span>
   }
 
   return(
     <>
-      <h1>Edit a bottle</h1>
-      {serverError && <>Error 500</>}
-      {formSuccess && <SuccessPopin />}
-      {formFailure && <>The form is not valid</>}
-      {cannotFetch ? <TryLater /> : <form onSubmit={handleSubmit}>
-        <input
-          id="name"
-          type="text"
-          placeholder="name*"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <select
-          value={wineCellarId}
-          onChange={(e) => { setWineCellarId(e.target.value) }}
-        >
-          { wineCellars.map(({id, name}) => { return(<option key={id} value={id}>{name}</option>)}) }
-        </select>
-        <input type="submit" />
-      </form>
-     }
+      <Header title="Edit a bottle" />
+      <div className="container">
+        {cannotFetch ? <Warning text="Server Error, please try later" /> : <form onSubmit={handleSubmit} className="card bg-light border-light text-center container">
+          <input
+            id="name"
+            type="text"
+            placeholder="name*"
+            className="form-control mb-3 mt-3"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <select
+            value={wineCellarId}
+            class="form-control form-select mb-3"
+            onChange={(e) => { setWineCellarId(e.target.value) }}
+          >
+            { wineCellars.map(({id, name}) => { return(<option key={id} value={id}>{name}</option>)}) }
+          </select>
+          <input type="submit" className="btn btn-primary form-control" value="Update" />
+          {serverError && <ServerError />}
+          {formInvalid && <FormInvalid />}
+          {formSuccess && <Success text="Bottle updated"/>}
+        </form>
+      }
+      </div>
     </>
   );
 }

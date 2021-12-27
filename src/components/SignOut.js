@@ -8,7 +8,7 @@ function SignOut (){
 
   return(
     <button
-      className="col-8 btn btn-outline-primary"
+      className="col-8 btn btn-outline-primary mb-5"
       onClick={killSesssion}
       >Sign out</button>
 

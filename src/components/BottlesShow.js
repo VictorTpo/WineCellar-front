@@ -3,10 +3,15 @@ import { useParams } from 'react-router-dom';
 
 import { currentAccountJwtToken } from '../utils/currentAccount'
 
+import Header from './Header';
+import ServerError from './FormOutputs/ServerError';
+
+import imgCorkscrew from '../assets/images/icons/corkscrew.png';
+import imgNewBottle from '../assets/images/icons/new-bottle.png';
+
 export default function BottlesShow() {
   const { id } = useParams();
 
-  const [factor, setFactor] = useState(0);
   const [name, setName] = useState("");
   const [wineCellarName, setWineCellarName] = useState("");
   const [counter, setCounter] = useState("");
@@ -36,17 +41,7 @@ export default function BottlesShow() {
       })
     }, [id])
 
-  const BottleDetails = () => {
-    return(
-      <ul>
-        <li>Name: {name}</li>
-        <li>Wine cellar: {wineCellarName}</li>
-        <li>Counter: {counter}</li>
-      </ul>
-    )
-  }
-  const handleSubmit = (event) => {
-    event.preventDefault()
+  function handleSubmit(factor) {
     const bottle_url = `${process.env.REACT_APP_DOMAIN}/bottles/${id}`
     const body = {
       counter: counter + factor
@@ -73,19 +68,43 @@ export default function BottlesShow() {
       })
   }
 
+  // function addBottle(){
+  //   setFactor(+1)
+  //   handleSubmit
+  // }
+
+  const BottleDetails = () => {
+    return(
+      <>
+        <ul>
+          <li>Name: {name}</li>
+          <li>Wine cellar: {wineCellarName}</li>
+          <li>Counter: {counter}</li>
+        </ul>
+        <div className="row fixed-bottom mb-5 text-center">
+          <div className="col-6">
+            <button onClick={() => handleSubmit(+1)} className="btn-img btn-app">
+              <img src={imgNewBottle} alt="Add a new bottle" />
+            </button>
+          </div>
+          <div className="col-6">
+          { counter < 1 ? null :
+            <button onClick={() => handleSubmit(-1)} className="btn-img btn-app">
+            <img src={imgCorkscrew} alt="Remove a bottle" />
+          </button>
+          }
+          </div>
+        </div>
+      </>
+    )
+  }
 
   return(
     <>
-      <h1>Show a bottle</h1>
-      {serverError ? <>Error 500</> : <BottleDetails />}
-      { counter < 1 ? null :
-        <form onSubmit={handleSubmit}>
-          <input onClick={() => setFactor(-1) } type="submit" value='I open 1' />
-        </form>
-      }
-      <form onSubmit={handleSubmit}>
-        <input onClick={() => setFactor(+1) } type="submit" value='I buy a new one' />
-      </form>
+      <Header title="Inspect bottle" />
+      <div className="container mxy-2">
+        {serverError ? <ServerError /> : <BottleDetails />}
+      </div>
     </>
   );
 }

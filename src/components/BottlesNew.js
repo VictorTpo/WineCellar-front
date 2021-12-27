@@ -2,18 +2,23 @@ import React, { useEffect, useState } from 'react';
 
 import { currentAccountJwtToken } from '../utils/currentAccount'
 
+import FormInvalid from './FormOutputs/FormInvalid';
+import Header from './Header';
+import ServerError from './FormOutputs/ServerError';
+import Success from './Alerts/Success';
+
 export default function BottlesNew() {
   const [name, setName] = useState("");
   const [wineCellarId, setWineCellarId] = useState("");
   const [wineCellars, setWineCellars] = useState([]);
   const [serverError, setServerError] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)
-  const [formFailure, setformFailure] = useState(false)
+  const [formInvalid, setformInvalid] = useState(false)
 
   function resetFormOutput() {
     setServerError(false)
     setFormSuccess(false)
-    setformFailure(false)
+    setformInvalid(false)
   }
 
   useEffect(()=> {
@@ -57,7 +62,7 @@ export default function BottlesNew() {
       .then(response => {
         resetFormOutput()
         if(!response.ok){
-          setformFailure(true)
+          setformInvalid(true)
         } else {
           setFormSuccess(true)
           setName('')
@@ -70,23 +75,24 @@ export default function BottlesNew() {
 
   return(
     <>
-      <h1>New Bottle Form</h1>
-      {serverError && <>Error 500</>}
-      {formSuccess && <>Your bottle has been saved</>}
-      {formFailure && <>The form is not valid</>}
-      <form onSubmit={handleSubmit}>
+      <Header title="New bottle" />
+      <form onSubmit={handleSubmit} className="card bg-light border-light text-center container">
       <input
           id="name"
           type="text"
           placeholder="name*"
+          className="form-control mb-3 mt-3"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <select onChange={(e) => { setWineCellarId(e.target.value) }}>
+        <select onChange={(e) => { setWineCellarId(e.target.value) }} class="form-control form-select mb-3">
           <option value="">--Please choose a wine cellar--</option>
           { wineCellars.map(({id, name}) => { return(<option key={id} value={id}>{name}</option>)}) }
         </select>
-        <input type="submit" />
+        <input type="submit" className="btn btn-primary form-control" value="Create" />
+        {serverError && <ServerError />}
+        {formInvalid && <FormInvalid />}
+        {formSuccess && <Success text="Bottle created"/>}
       </form>
     </>
   );
