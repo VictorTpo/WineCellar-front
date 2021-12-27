@@ -13,8 +13,14 @@ html #root {
     padding: 0 !important;
     margin: 0 !important;
   }
-  input { font-size: 1.5em; }
+  h3 {
+    font-size: 1.5em;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  p { font-size: 1.5em; }
 
+  input { font-size: 1.5em; }
 
   .btn{
     &.btn-primary {
@@ -24,6 +30,11 @@ html #root {
     &.btn-outline-primary{
       border-color: #A13D63;
       color: #A13D63;
+      &:hover{
+        background-color: #A13D63;
+        color: #2B2118;
+        border-color: #2B2118;
+      }
     }
   }
 
@@ -32,7 +43,7 @@ html #root {
   }
 }
 
-.unlogged-menu {
+.home-unlogged {
   margin-top: 50%;
 }
 

@@ -1,10 +1,13 @@
-
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 import Header from './Header';
-import ServerError from './FormOutputs/ServerError';
 import FormInvalid from './FormOutputs/FormInvalid';
+import ServerError from './FormOutputs/ServerError';
 
 function SignIn (){
+  let navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [serverError, setServerError] = useState(false)
@@ -42,6 +45,7 @@ function SignIn (){
           jwtToken: body.jwt_token
         }
         localStorage.setItem("account", JSON.stringify(account))
+        navigate("/")
         window.location.reload(false)
       })
       .catch(error => {
