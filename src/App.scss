@@ -1,0 +1,50 @@
+
+@font-face {
+  font-family: 'Raleway';
+  src: local('Raleway'), url(./assets/fonts/Raleway/Raleway-Medium.ttf);
+}
+
+html #root {
+  color: #2B2118;
+  font-family: 'Raleway';
+
+  h1 {
+    font-size: 2em;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  input { font-size: 1.5em; }
+
+
+  .btn{
+    &.btn-primary {
+      background-color: #A13D63;
+      border: none;
+    }
+    &.btn-outline-primary{
+      border-color: #A13D63;
+      color: #A13D63;
+    }
+  }
+
+  .btn {
+    font-size: 2em;
+  }
+}
+
+.unlogged-menu {
+  margin-top: 50%;
+}
+
+header {
+  background-color: #A13D63;
+  padding: .5em 0;
+  h1{
+    text-align: center;
+  }
+  button{
+    background: none;
+    border: none;
+    position: absolute;
+  }
+}

@@ -1,16 +1,19 @@
 
 import React, { useState } from 'react';
+import Header from './Header';
+import ServerError from './FormOutputs/ServerError';
+import FormInvalid from './FormOutputs/FormInvalid';
 
 function SignIn (){
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [serverError, setServerError] = useState(false)
-  const [formFailure, setFormFailure] = useState(false)
+  const [formInvalid, setFormInvalid] = useState(false)
 
   const handleSubmit = (event) => {
     event.preventDefault()
     setServerError(false)
-    setFormFailure(false)
+    setFormInvalid(false)
     const url = `${process.env.REACT_APP_DOMAIN}/sessions`
     const body = {
       email: email,
@@ -27,11 +30,12 @@ function SignIn (){
     fetch(url, query)
       .then(response => {
         if(!response.ok){
-          setFormFailure(true)
+          setFormInvalid(true)
         } else {
           return response.json()
         }
       }).then(body => {
+        if(!body) { return }
         const account = {
           id: body.id,
           firstName: body.first_name,
@@ -41,20 +45,20 @@ function SignIn (){
         window.location.reload(false)
       })
       .catch(error => {
+        setFormInvalid(false)
         setServerError(true)
       })
   }
 
   return(
     <>
-      <h1>Sign in</h1>
-      {serverError && <>Error 500</>}
-      {formFailure && <>Form invalid</>}
-      <form onSubmit={handleSubmit}>
+      <Header title="Login" />
+      <form onSubmit={handleSubmit} className="card bg-light border-light text-center container">
         <input
           id="email"
           type="text"
           placeholder="email*"
+          className="form-control mb-3 mt-3"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -62,10 +66,13 @@ function SignIn (){
           id="password"
           type="password"
           placeholder="password*"
+          className="form-control mb-3"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input type="submit" />
+        <input type="submit" className="btn btn-primary form-control" value="Login" />
+        {serverError && <ServerError />}
+        {formInvalid && <FormInvalid />}
       </form>
     </>
   )
