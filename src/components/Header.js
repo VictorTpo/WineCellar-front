@@ -8,7 +8,7 @@ function Header ({title, noBackBtn}){
 
   return(
     <header className="mb-3">
-      {!noBackBtn && <button onClick={() => navigate(-1)}>
+      {!noBackBtn && <button onClick={() => navigate(-1)} className="btn-img">
         <img src={imgPrevious} alt="previous page" width="30px" />
       </button>}
       <h1>{title ? title : "Wine Cellar Manager"}</h1>
