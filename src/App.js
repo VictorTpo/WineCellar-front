@@ -8,6 +8,7 @@ import BottlesNew from './components/BottlesNew';
 import BottlesShow from './components/BottlesShow';
 import Home from './components/Home';
 import SignIn from './components/SignIn'
+import SignOut from './components/SignOut'
 import SignUp from './components/SignUp'
 import WineCellarsEdit from './components/WineCellarsEdit';
 import WineCellarsIndex from './components/WineCellarsIndex';
@@ -32,7 +33,7 @@ const LoggedMenu = () => {
         <li><Link to="/wine_cellars/new">New wine cellar</Link></li>
         <li><Link to="/bottles">My bottles</Link></li>
         <li><Link to="/bottles/new">New bottle</Link></li>
-        <li>Logout</li>
+        <li><SignOut /></li>
       </>
     )
   }
