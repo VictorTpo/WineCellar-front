@@ -9,7 +9,6 @@ import Success from './Alerts/Success';
 
 export default function WineCellarsNew() {
   const [formName, setFormName] = useState("");
-  const [setName] = useState("");
   const [serverError, setServerError] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)
   const [formInvalid, setFormInvalid] = useState(false)
@@ -22,6 +21,7 @@ export default function WineCellarsNew() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    resetFormOutput()
     const url = `${process.env.REACT_APP_DOMAIN}/wine_cellars`
     const body = {
       name: formName
@@ -37,7 +37,6 @@ export default function WineCellarsNew() {
 
     fetch(url, query)
       .then(response => {
-        resetFormOutput()
         if(!response.ok){
           setFormInvalid(true)
         } else {
@@ -47,7 +46,6 @@ export default function WineCellarsNew() {
       .then(body => {
         if(body){
           setFormSuccess(true)
-          setName(body.name)
           setFormName('')
         }
       }).catch(error => {

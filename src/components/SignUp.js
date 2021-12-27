@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
+import FormInvalid from './FormOutputs/FormInvalid';
 import Header from './Header';
 import ServerError from './FormOutputs/ServerError';
-import FormInvalid from './FormOutputs/FormInvalid';
+import Success from './Alerts/Success';
 
 function SignUp (){
   const [email, setEmail] = useState("");
@@ -48,7 +49,6 @@ function SignUp (){
   return(
     <>
       <Header title="Create an account" />
-      {formSuccess && <>Your account has been created</>}
       <form onSubmit={handleSubmit} className="card bg-light border-light text-center container">
         <input
           id="email"
@@ -85,6 +85,7 @@ function SignUp (){
         <input type="submit" className="btn btn-primary form-control" value="Create account" />
         {serverError && <ServerError />}
         {formInvalid && <FormInvalid />}
+        {formSuccess && <Success text="Your account has been created"/>}
       </form>
     </>
   )
