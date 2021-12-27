@@ -2,42 +2,26 @@ import React from 'react';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import './App.scss';
 
+import { isLogged } from './utils/session'
+
 import BottlesEdit from './components/BottlesEdit';
 import BottlesIndex from './components/BottlesIndex';
 import BottlesNew from './components/BottlesNew';
 import BottlesShow from './components/BottlesShow';
-import Home from './components/Home';
+import HomeLogged from './components/HomeLogged';
 import HomeUnlogged from './components/HomeUnlogged';
 import SignIn from './components/SignIn'
-import SignOut from './components/SignOut'
 import SignUp from './components/SignUp'
 import WineCellarsEdit from './components/WineCellarsEdit';
 import WineCellarsIndex from './components/WineCellarsIndex';
 import WineCellarsNew from './components/WineCellarsNew';
 
-function loggedIn() {
-  return(localStorage.getItem("account") != null)
-}
-
-const LoggedMenu = () => {
-    return(
-      <ul>
-        <li><Link to="/wine_cellars">My wine cellars</Link></li>
-        <li><Link to="/wine_cellars/new">New wine cellar</Link></li>
-        <li><Link to="/bottles">My bottles</Link></li>
-        <li><Link to="/bottles/new">New bottle</Link></li>
-        <li><SignOut /></li>
-      </ul>
-    )
-}
-
 const HomeSwitch = () => {
-  if(loggedIn()){
-    return <LoggedMenu />
+  if(isLogged()){
+    return <HomeLogged />
   } else {
     return <HomeUnlogged />
   }
-  // { !loggedIn() ? <HomeUnlogged /> : <LoggedMenu /> }
 }
 
 function App() {

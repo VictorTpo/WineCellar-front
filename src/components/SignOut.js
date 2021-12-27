@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 function SignOut (){
@@ -8,7 +7,11 @@ function SignOut (){
   }
 
   return(
-    <button onClick={killSesssion}>Sign out</button>
+    <button
+      className="col-8 btn btn-outline-primary"
+      onClick={killSesssion}
+      >Sign out</button>
+
   )
 }
 
