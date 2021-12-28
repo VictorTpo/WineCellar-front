@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { currentAccountJwtToken } from '../utils/currentAccount'
+import { queryBuilder } from '../utils/fetchUtils'
 
 import FormInvalid from './FormOutputs/FormInvalid';
 import Header from './Header';
@@ -27,14 +27,7 @@ export default function WineCellarsEdit() {
   }
 
   useEffect(()=> {
-    const query = {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      }
-    };
-    fetch(wine_cellar_url, query)
+    fetch(wine_cellar_url, queryBuilder('GET'))
       .then(response => response.json())
       .then(response => {
         resetFormOutput()
@@ -50,16 +43,8 @@ export default function WineCellarsEdit() {
     const body = {
       name: name
     }
-    const query = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      },
-      body: JSON.stringify(body)
-    };
 
-    fetch(wine_cellar_url, query)
+    fetch(wine_cellar_url, queryBuilder('PATCH', body))
       .then(response => {
         resetFormOutput()
         if(!response.ok){

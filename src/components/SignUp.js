@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { queryBuilder } from '../utils/fetchUtils'
+
 import FormInvalid from './FormOutputs/FormInvalid';
 import Header from './Header';
 import ServerError from './FormOutputs/ServerError';
@@ -19,22 +21,15 @@ function SignUp (){
     setServerError(false)
     setFormSuccess(false)
     setFormInvalid(false)
-    const url = `${process.env.REACT_APP_DOMAIN}/accounts`
+
     const body = {
       email: email,
       first_name: firstName,
       last_name: lastName,
       password: password
     }
-    const query = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    };
 
-    fetch(url, query)
+    fetch(`${process.env.REACT_APP_DOMAIN}/accounts`, queryBuilder('POST', body))
       .then(response => {
         if(!response.ok){
           setFormInvalid(true)

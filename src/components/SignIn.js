@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+
+import { queryBuilder } from '../utils/fetchUtils'
 
 import Header from './Header';
 import FormInvalid from './FormOutputs/FormInvalid';
 import ServerError from './FormOutputs/ServerError';
 
 function SignIn (){
-  let navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [serverError, setServerError] = useState(false)
@@ -17,20 +16,13 @@ function SignIn (){
     event.preventDefault()
     setServerError(false)
     setFormInvalid(false)
-    const url = `${process.env.REACT_APP_DOMAIN}/sessions`
+
     const body = {
       email: email,
       password: password
     }
-    const query = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    };
 
-    fetch(url, query)
+    fetch(`${process.env.REACT_APP_DOMAIN}/sessions`, queryBuilder('POST', body))
       .then(response => {
         if(!response.ok){
           setFormInvalid(true)
@@ -42,11 +34,10 @@ function SignIn (){
         const account = {
           id: body.id,
           firstName: body.first_name,
-          jwtToken: body.jwt_token
         }
         localStorage.setItem("account", JSON.stringify(account))
-        navigate("/")
-        window.location.reload(false)
+        localStorage.setItem("token", body.jwt_token)
+        window.location.href = '/'
       })
       .catch(error => {
         setFormInvalid(false)

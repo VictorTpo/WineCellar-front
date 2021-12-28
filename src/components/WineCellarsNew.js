@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { currentAccountJwtToken } from '../utils/currentAccount'
+import { queryBuilder } from '../utils/fetchUtils'
 
 import FormInvalid from './FormOutputs/FormInvalid';
 import Header from './Header';
@@ -22,20 +22,12 @@ export default function WineCellarsNew() {
   const handleSubmit = (event) => {
     event.preventDefault()
     resetFormOutput()
-    const url = `${process.env.REACT_APP_DOMAIN}/wine_cellars`
+
     const body = {
       name: formName
     }
-    const query = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      },
-      body: JSON.stringify(body)
-    };
 
-    fetch(url, query)
+    fetch(`${process.env.REACT_APP_DOMAIN}/wine_cellars`, queryBuilder('POST', body))
       .then(response => {
         if(!response.ok){
           setFormInvalid(true)

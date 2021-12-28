@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { currentAccountJwtToken } from '../utils/currentAccount'
+import { queryBuilder } from '../utils/fetchUtils'
 
 import FormInvalid from './FormOutputs/FormInvalid';
 import Header from './Header';
@@ -22,15 +22,7 @@ export default function BottlesNew() {
   }
 
   useEffect(()=> {
-    const url = `${process.env.REACT_APP_DOMAIN}/wine_cellars`
-    const query = {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      }
-    };
-    fetch(url, query)
+    fetch(`${process.env.REACT_APP_DOMAIN}/wine_cellars`, queryBuilder('GET'))
       .then(response => response.json())
       .then(response => {
         resetFormOutput()
@@ -44,21 +36,13 @@ export default function BottlesNew() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const url   = `${process.env.REACT_APP_DOMAIN}/bottles`
+
     const body  = {
       name: name,
       wine_cellar_id: wineCellarId
     }
-    const query = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      },
-      body: JSON.stringify(body)
-    };
 
-    fetch(url, query)
+    fetch(`${process.env.REACT_APP_DOMAIN}/bottles`, queryBuilder('POST', body))
       .then(response => {
         resetFormOutput()
         if(!response.ok){
@@ -85,7 +69,7 @@ export default function BottlesNew() {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <select onChange={(e) => { setWineCellarId(e.target.value) }} class="form-control form-select mb-3">
+        <select onChange={(e) => { setWineCellarId(e.target.value) }} className="form-control form-select mb-3">
           <option value="">--Please choose a wine cellar--</option>
           { wineCellars.map(({id, name}) => { return(<option key={id} value={id}>{name}</option>)}) }
         </select>
