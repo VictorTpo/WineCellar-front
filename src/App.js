@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 
-import { isLogged } from './utils/session'
+import { sessionIsLogged } from './utils/session'
 
 import BottlesEdit from './components/BottlesEdit';
 import BottlesIndex from './components/BottlesIndex';
@@ -17,11 +17,16 @@ import WineCellarsIndex from './components/WineCellarsIndex';
 import WineCellarsNew from './components/WineCellarsNew';
 
 const HomeSwitch = () => {
-  if(isLogged()){
+  if(sessionIsLogged()){
     return <HomeLogged />
   } else {
     return <HomeUnlogged />
   }
+}
+
+function PrivateRoute({ children }) {
+  const auth = sessionIsLogged()
+  return auth ? children : <Navigate to="/" />;
 }
 
 function App() {
@@ -29,15 +34,39 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path='/' element={HomeSwitch()}></Route>
-        <Route exact path='/bottles' element={< BottlesIndex />}></Route>
-        <Route exact path='/bottles/new' element={< BottlesNew />}></Route>
-        <Route exact path='/bottles/:id' element={< BottlesShow />}></Route>
-        <Route exact path='/bottles/:id/edit' element={< BottlesEdit />}></Route>
         <Route exact path='/sign-in' element={< SignIn />}></Route>
         <Route exact path='/sign-up' element={< SignUp />}></Route>
-        <Route exact path='/wine_cellars' element={< WineCellarsIndex />}></Route>
-        <Route exact path='/wine_cellars/new' element={< WineCellarsNew />}></Route>
-        <Route exact path='/wine_cellars/:id/edit' element={< WineCellarsEdit />}></Route>
+
+        <Route
+          path="/bottles"
+          element={<PrivateRoute><BottlesIndex /></PrivateRoute>}
+        />
+        <Route
+          path="/bottles/new"
+          element={<PrivateRoute><BottlesNew /></PrivateRoute>}
+        />
+        <Route
+          path="/bottles/:id"
+          element={<PrivateRoute><BottlesShow /></PrivateRoute>}
+        />
+        <Route
+          path="/bottles/:id/edit"
+          element={<PrivateRoute><BottlesEdit /></PrivateRoute>}
+        />
+        <Route
+          path="/wine_cellars"
+          element={<PrivateRoute><WineCellarsIndex /></PrivateRoute>}
+        />
+        <Route
+          path="/wine_cellars/new"
+          element={<PrivateRoute><WineCellarsNew /></PrivateRoute>}
+        />
+        <Route
+          path="/wine_cellars/:id/edit"
+          element={<PrivateRoute><WineCellarsEdit /></PrivateRoute>}
+        />
+
+        <Route path='*' element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );

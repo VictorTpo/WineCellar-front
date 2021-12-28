@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { currentAccountJwtToken } from '../utils/currentAccount'
+import { queryBuilder } from '../utils/fetchUtils'
 
 import Header from './Header';
 import Warning from './Alerts/Warning';
@@ -14,15 +14,7 @@ function BottlesIndex() {
   const [cannotFetch, setCannotFetch] = useState(false)
 
   useEffect(()=> {
-    const url   = `${process.env.REACT_APP_DOMAIN}/bottles`
-    const query = {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      }
-    };
-    fetch(url, query)
+    fetch(`${process.env.REACT_APP_DOMAIN}/bottles`, queryBuilder('GET'))
       .then(response => response.json())
       .then(results => {
         setCannotFetch(false)

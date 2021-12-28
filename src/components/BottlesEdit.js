@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { currentAccountJwtToken } from '../utils/currentAccount'
+import { queryBuilder } from '../utils/fetchUtils'
 
 import FormInvalid from './FormOutputs/FormInvalid';
 import Header from './Header';
@@ -29,15 +29,7 @@ export default function BottlesEdit() {
   }
 
   useEffect(()=> {
-    const url = `${process.env.REACT_APP_DOMAIN}/wine_cellars`
-    const wine_cellar_query = {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      }
-    };
-    fetch(url, wine_cellar_query)
+    fetch(`${process.env.REACT_APP_DOMAIN}/wine_cellars`, queryBuilder('GET'))
       .then(response => response.json())
       .then(response => {
         setWineCellars(response)
@@ -46,14 +38,7 @@ export default function BottlesEdit() {
         setWineCellars([])
       })
 
-    const bottle_query = {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      }
-    };
-    fetch(bottle_url, bottle_query)
+    fetch(bottle_url, queryBuilder('GET'))
       .then(response => response.json())
       .then(response => {
         setName(response.name)
@@ -71,16 +56,8 @@ export default function BottlesEdit() {
       name: name,
       wine_cellar_id: wineCellarId
     }
-    const query = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      },
-      body: JSON.stringify(body)
-    };
 
-    fetch(bottle_url, query)
+    fetch(bottle_url, queryBuilder('PATCH', body))
       .then(response => {
         resetFormOutput()
         if(!response.ok){
@@ -110,7 +87,7 @@ export default function BottlesEdit() {
           />
           <select
             value={wineCellarId}
-            class="form-control form-select mb-3"
+            className="form-control form-select mb-3"
             onChange={(e) => { setWineCellarId(e.target.value) }}
           >
             { wineCellars.map(({id, name}) => { return(<option key={id} value={id}>{name}</option>)}) }

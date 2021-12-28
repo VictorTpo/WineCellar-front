@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { currentAccountJwtToken } from '../utils/currentAccount'
+import { queryBuilder } from '../utils/fetchUtils'
 
 import Header from './Header';
 import ServerError from './FormOutputs/ServerError';
@@ -18,15 +18,7 @@ export default function BottlesShow() {
   const [serverError, setServerError] = useState(false)
 
   useEffect(()=> {
-    const url = `${process.env.REACT_APP_DOMAIN}/bottles/${id}`
-    const query = {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      }
-    };
-    fetch(url, query)
+    fetch(`${process.env.REACT_APP_DOMAIN}/bottles/${id}`, queryBuilder('GET'))
       .then(response => response.json())
       .then(bottle => {
         setServerError(false)
@@ -42,20 +34,11 @@ export default function BottlesShow() {
     }, [id])
 
   function handleSubmit(factor) {
-    const bottle_url = `${process.env.REACT_APP_DOMAIN}/bottles/${id}`
     const body = {
       counter: counter + factor
     }
-    const query = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${currentAccountJwtToken()}`
-      },
-      body: JSON.stringify(body)
-    };
 
-    fetch(bottle_url, query)
+    fetch(`${process.env.REACT_APP_DOMAIN}/bottles/${id}`, queryBuilder('PATCH', body))
       .then(response => {
         if(!response.ok){
           // todo
@@ -67,11 +50,6 @@ export default function BottlesShow() {
         // todo
       })
   }
-
-  // function addBottle(){
-  //   setFactor(+1)
-  //   handleSubmit
-  // }
 
   const BottleDetails = () => {
     return(
