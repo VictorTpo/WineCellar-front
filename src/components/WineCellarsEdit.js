@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { queryBuilder } from '../utils/fetchUtils'
+import { wineCellarsFind, wineCellarsUpdate } from '../utils/wineCellarsUtils'
 
 import FormInvalid from './FormOutputs/FormInvalid';
 import Header from './Header';
@@ -11,13 +11,13 @@ import Warning from './Alerts/Warning';
 
 export default function WineCellarsEdit() {
   const { id } = useParams();
-
-  const [name, setName] = useState("");
+  const [name, setName] = useState(wineCellarsFind(id).name);
   const [serverError, setServerError] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)
   const [formInvalid, setformInvalid] = useState(false)
   const [cannotFetch, setCannotFetch] = useState(false)
-  const wine_cellar_url = `${process.env.REACT_APP_DOMAIN}/wine_cellars/${id}`
+  let navigate = useNavigate();
+
 
   function resetFormOutput() {
     setServerError(false)
@@ -26,37 +26,13 @@ export default function WineCellarsEdit() {
     setCannotFetch(false)
   }
 
-  useEffect(()=> {
-    fetch(wine_cellar_url, queryBuilder('GET'))
-      .then(response => response.json())
-      .then(response => {
-        resetFormOutput()
-        setName(response.name)
-      }).catch(error => {
-        resetFormOutput()
-        setCannotFetch(true)
-      })
-    }, [wine_cellar_url])
-
   const handleSubmit = (event) => {
     event.preventDefault()
-    const body = {
-      name: name
-    }
 
-    fetch(wine_cellar_url, queryBuilder('PATCH', body))
-      .then(response => {
-        resetFormOutput()
-        if(!response.ok){
-          setformInvalid(true)
-        } else {
-          setFormSuccess(true)
-        }
-      })
-      .catch(error => {
-        resetFormOutput()
-        if(!formInvalid) { setServerError(true) }
-      })
+    wineCellarsUpdate(id, { name: name, sync: false })
+
+    localStorage.setItem("needSync", true)
+    navigate('/wine_cellars')
   }
 
   return(

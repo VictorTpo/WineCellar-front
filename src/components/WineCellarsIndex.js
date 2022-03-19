@@ -1,46 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { queryBuilder } from '../utils/fetchUtils'
-
 import Header from './Header';
-import Warning from './Alerts/Warning';
+
+import { wineCellarsList } from '../utils/wineCellarsUtils'
 
 import imgPencil from '../assets/images/icons/pencil.png';
+import imgMobileWarning from '../assets/images/icons/mobile-warning.png';
 
 function WineCellarsIndex() {
-  const [list, setList] = useState([]);
-  const [cannotFetch, setCannotFetch] = useState(false)
+  const [list] = useState(wineCellarsList());
 
-  useEffect(()=> {
-    fetch(`${process.env.REACT_APP_DOMAIN}/wine_cellars`, queryBuilder('GET'))
-      .then(response => response.json())
-      .then(results => {
-        setCannotFetch(false)
-        setList(results)
-      }).catch(error => {
-        setList([])
-        setCannotFetch(true)
-      })
-  }, [])
-
-  const listItems = list.map(({id, name}) =>
+  const listItems = list.map(({id, name, sync}) =>
     <li key={id} className="list-group-item position-relative pb-3 pt-3">
       {name}
-      <Link to={`/wine_cellars/${id}/edit`} className="position-absolute end-0">
-        <img src={imgPencil} alt="edit the bottle" width="40px"/>
-      </Link>
+      <div className="position-absolute end-0 top-0">
+        { !sync && <img src={imgMobileWarning} alt="inspect the bottle" width="40px" /> }
+        <Link to={`/wine_cellars/${id}/edit`} className="mx-2">
+          <img src={imgPencil} alt="edit the bottle" width="40px"/>
+        </Link>
+      </div>
     </li>
   )
   return(
     <>
-      <Header title="My wine cellars" />
+      <Header title="My wine cellars" backTo="/" />
       <div className="container mxy-2">
-        {cannotFetch ? <Warning text="Cannot retrieve list" /> :
-          <ul className="list-group list-group-flush">
-            { listItems }
-          </ul>
-        }
+        <ul className="list-group list-group-flush">
+          { listItems }
+        </ul>
       </div>
     </>
   )
