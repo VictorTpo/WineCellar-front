@@ -3,6 +3,7 @@ import React from 'react';
 function SignOut (){
   const killSesssion = () => {
     localStorage.removeItem("account")
+    localStorage.removeItem("needSync")
     localStorage.removeItem("token")
     window.location.href = '/'
   }

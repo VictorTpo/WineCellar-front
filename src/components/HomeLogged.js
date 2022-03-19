@@ -6,6 +6,8 @@ import { currentAccountFirstName } from '../utils/currentAccount'
 import Header from './Header';
 import SignOut from './SignOut'
 
+import { wineCellarsCount } from '../utils/wineCellarsUtils'
+
 import imgPlus from '../assets/images/icons/plus.png';
 
 function HomeLogged (){
@@ -17,7 +19,7 @@ function HomeLogged (){
         <p>Hello {currentAccountFirstName()}</p>
 
         <div className="row mb-5 mx-2">
-          <h3 className="text-start">My wine cellars</h3>
+          <h3 className="text-start">My wine cellars ({wineCellarsCount()})</h3>
           <Link className="col-7 btn btn-outline-primary" to="/wine_cellars">List them</Link>
           <Link className="col-2 offset-1 btn btn-outline-primary" to="/wine_cellars/new">
             <img src={imgPlus} alt="add a new wine cellar" width="40px" />

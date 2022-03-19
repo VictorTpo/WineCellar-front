@@ -1,10 +1,12 @@
+const account = JSON.parse(localStorage.getItem("account"))
+
 export const currentAccountFirstName = () => {
   if(!localStorage.getItem("account")) return null
-  return JSON.parse(localStorage.getItem("account")).firstName
+  return account.firstName
 }
 
 export const currentAccountId = () => {
   if(!localStorage.getItem("account")) return null
-  return JSON.parse(localStorage.getItem("account")).id
+  return account.id
 }
 

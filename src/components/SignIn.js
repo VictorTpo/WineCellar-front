@@ -37,6 +37,28 @@ function SignIn (){
         }
         localStorage.setItem("account", JSON.stringify(account))
         localStorage.setItem("token", body.jwt_token)
+        fetchAllAccountData()
+      })
+      .catch(error => {
+        setFormInvalid(false)
+        setServerError(true)
+      })
+  }
+
+  const fetchAllAccountData = () => {
+    fetch(`${process.env.REACT_APP_DOMAIN}/wine_cellars`, queryBuilder('GET'))
+      .then(response => {
+        if(!response.ok){
+          setFormInvalid(true)
+        } else {
+          return response.json()
+        }
+      }).then(body => {
+        if(!body) { return }
+        const wineCellars = []
+        Object.values(body).forEach(payload => wineCellars.push(Object.assign(payload, {sync: true})) )
+        localStorage.setItem("wine_cellars", JSON.stringify(body))
+        localStorage.setItem("needSync", false)
         window.location.href = '/'
       })
       .catch(error => {
